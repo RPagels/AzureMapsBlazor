@@ -1,0 +1,36 @@
+﻿@page "/"
+@using AzureMapsControl.Components.Map
+@using Microsoft.Identity.Client
+@using Darnton.Blazor.DeviceInterop.Geolocation;
+@inject IJSRuntime JS
+@inject IConfiguration _configuration
+@inject IGeolocationService GeolocationService
+
+<PageTitle>My coordinates</PageTitle>
+
+@using AzureMaps.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Where am i?</h1>
+
+<p>This component demonstrates fetching coordinates from Azure Maps service.</p>
+
+<p>CurrentLatitude: @CurrentLatitude</p>
+<p>CurrentLongitude: @CurrentLongitude</p>
+
+@code {
+    protected GeolocationResult? CurrentPositionResult { get; set; }
+    protected string CurrentLatitude => 
+    CurrentPositionResult?.Position?.Coords?.Latitude.ToString("F2");
+    protected string CurrentLongitude => 
+    CurrentPositionResult?.Position?.Coords?.Longitude.ToString("F2");
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            CurrentPositionResult = await GeolocationService.GetCurrentPosition();
+            StateHasChanged();
+        }
+    }
+}

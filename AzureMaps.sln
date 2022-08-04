@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureMaps", "AzureMaps.csproj", "{C45A17D0-5638-4793-B122-66EF9A1F536A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C45A17D0-5638-4793-B122-66EF9A1F536A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C45A17D0-5638-4793-B122-66EF9A1F536A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C45A17D0-5638-4793-B122-66EF9A1F536A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C45A17D0-5638-4793-B122-66EF9A1F536A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E87DC3C-5028-4D07-A355-0B36157D1599}
+	EndGlobalSection
+EndGlobal
