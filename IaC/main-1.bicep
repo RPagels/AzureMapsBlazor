@@ -94,7 +94,7 @@ module configsettingsmod './main-1-configsettings.bicep' = {
   params: {
     keyvaultName: keyvaultName
     secret_AppKeyName: secret_AppKeyName
-    secret_AppKeyValue: azuremapsmod.outputs.out_AzureMapsAppKey
+    secret_AppKeyValue: 'H~T8Q~MABqEuVvEtpLFnt65LTylFxr_2aJaGXbup'
     AzureMapsClientId: azuremapsmod.outputs.out_AzureMapsClientId1
     AzureMapsClientId2: azuremapsmod.outputs.out_AzureMapsClientId2
     tenant: subscription().tenantId
