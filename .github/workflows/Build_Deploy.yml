@@ -12,7 +12,7 @@ env:
   AZURE_WEBAPP_NAME: AzureMapsBlazorApp
   AZURE_WEBAPP_PACKAGE_PATH: ./publish
   Azure_Resource_GroupName: 'rg-AzureMapsBlazor'
-  Azure_Resource_GroupLocation: 'eastus2'
+  Azure_Resource_GroupLocation: 'eastus'
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
   WORKING_DIRECTORY: .
