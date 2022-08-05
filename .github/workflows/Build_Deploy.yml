@@ -51,8 +51,8 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: IaC
-        path: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/IaC/*.*"
-        #path: ${{ github.workspace }}/IaC/*.*
+        #path: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/IaC/*.*"
+        path: ${{ github.workspace }}/IaC/*.*
 
   deploy_infrastructure:
     runs-on: ubuntu-latest
@@ -86,8 +86,8 @@ jobs:
       continue-on-error: false
       with:
         name: IaC
-        path: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/IaC"
-        #path: ${{ github.workspace }}/IaC
+        #path: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/IaC"
+        path: ${{ github.workspace }}/IaC
 
     # - name: Install Bicep
     #   run: |
