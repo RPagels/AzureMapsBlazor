@@ -5,6 +5,8 @@ param webappName string
 // param secret_WebsiteContentAzureFileConnectionStringName string
 param appInsightsInstrumentationKey string
 param appInsightsConnectionString string
+param AzureMapsClientId string
+param AzureMapsClientId2 string
 
 param secret_AppKeyName string
 
@@ -94,9 +96,10 @@ resource webSiteAppSettingsStrings 'Microsoft.Web/sites/config@2021-03-01' = {
     APPLICATIONINSIGHTS_CONNECTION_STRING: appInsightsConnectionString
     WebAppUrl: 'https://${existing_appService.name}.azurewebsites.net/'
     ASPNETCORE_ENVIRONMENT: 'Development'
-    'AzureMaps:AadAppId': 'a91530fe-cfae-4ca3-b801-9d80da0cb208'
+    'AzureMaps:AadAppId': 'TBD'
     'AzureMaps:AadTenant': '72f988bf-86f1-41af-91ab-2d7cd011db47'
-    'AzureMaps:ClientId': '83707410-e8e2-41d8-9cfc-7c5330fb5168'
+    'AzureMaps:ClientId': AzureMapsClientId //'2a888859-74b3-4766-9d7f-bf6262bc6e14'
+    'AzureMaps:ClientId2': AzureMapsClientId2 //'2a888859-74b3-4766-9d7f-bf6262bc6e14'
     'AzureMaps:AppKey': '@Microsoft.KeyVault(VaultName=${keyvaultName};SecretName=${secret_AppKeyName})'
     'Debug Only': 'AzureMaps:AppKey ${secret_AppKeyValue})'
   }
