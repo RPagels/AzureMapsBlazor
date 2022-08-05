@@ -6,11 +6,10 @@
 @inject IConfiguration _configuration
 @inject IGeolocationService GeolocationService
 
-<p>CurrentLatitude: @CurrentLatitude</p>
-<p>CurrentLongitude: @CurrentLongitude</p>
+<p>CurrentLatitude: <b>@CurrentLatitude</b>   -   CurrentLongitude: <b>@CurrentLongitude</b></p>
 
 <AzureMap Id="map"
-          CameraOptions="new CameraOptions { Zoom = 13 }"
+          CameraOptions="new CameraOptions { Zoom = 12 }"
           StyleOptions="new StyleOptions { ShowLogo = false }"
           EventActivationFlags="MapEventActivationFlags.None().Enable(MapEventType.Ready)"
           TrafficOptions="new AzureMapsControl.Components.Traffic.TrafficOptions {
