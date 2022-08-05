@@ -1,11 +1,12 @@
-param accounts_azuremaps_name string = 'azuremaps'
+param azuremapname string
+param location string = resourceGroup().location
 
 resource accounts_azuremaps_name_resource 'Microsoft.Maps/accounts@2021-12-01-preview' = {
-  name: accounts_azuremaps_name
-  location: 'eastus'
+  name: azuremapname
+  location: location
   sku: {
     name: 'G2'
-    tier: 'Standard'
+    //tier: 'Standard'
   }
   kind: 'Gen2'
   identity: {

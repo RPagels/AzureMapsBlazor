@@ -13,6 +13,12 @@ var appInsightsAlertName = 'responsetime-${uniqueString(resourceGroup().id)}'
 var webAppPlanName = 'plan-${uniqueString(resourceGroup().id)}'
 var webSiteName = 'app-${uniqueString(resourceGroup().id)}'
 var azuremapname = 'maps-${uniqueString(resourceGroup().id)}'
+var functionAppName = 'func-${uniqueString(resourceGroup().id)}'
+var functionAppServicePlanName = 'funcplan-${uniqueString(resourceGroup().id)}'
+var keyvaultName = 'kv-${uniqueString(resourceGroup().id)}'
+
+// KeyVault Secret Names
+param secret_configStoreConnectionName string = 'ConnectionStringsAppConfig'
 
 // Tags
 var defaultTags = {
@@ -50,18 +56,65 @@ module functionappmod 'main-1-funcapp.bicep' = {
   
 }
 
+// Create Web App
+module webappmod './main-1-webapp.bicep' = {
+  name: 'webappdeploy'
+  params: {
+    webAppPlanName: webAppPlanName
+    webSiteName: webSiteName
+    location: location
+    appInsightsInstrumentationKey: appinsightsmod.outputs.out_appInsightsInstrumentationKey
+    appInsightsConnectionString: appinsightsmod.outputs.out_appInsightsConnectionString
+    defaultTags: defaultTags
+  }
+  dependsOn:  [
+    appinsightsmod
+  ]
+}
+
+// Create Azure KeyVault
+module keyvaultmod './main-1-keyvault.bicep' = {
+  name: keyvaultName
+  params: {
+    location: location
+    vaultName: keyvaultName
+    }
+ }
+
+ module azuremapsmod 'main-1-azuremaps.bicep' = {
+  name: azuremapname
+  params: {
+    location: location
+    azuremapname: azuremapname
+  }
+ }
+
+ // Create Configuration Entries
+module configsettingsmod './main-1-configsettings.bicep' = {
+  name: 'configSettings'
+  params: {
+    keyvaultName: keyvaultName
+    secret_AppKeyName: 'AppKey'
+    secret_AppKeyNameValue: 'IIM8Q~rcoip88gyTIyaKVGERsZ_1JUSnSRi2OaD2'
+    tenant: subscription().tenantId
+    appServiceprincipalId: webappmod.outputs.out_appServiceprincipalId
+    webappName: webSiteName
+    functionAppName: functionAppName
+    funcAppServiceprincipalId: functionappmod.outputs.out_funcAppServiceprincipalId
+    secret_AzureWebJobsStorageName: secret_AzureWebJobsStorageName
+    secret_AzureWebJobsStorageValue: functionappmod.outputs.out_AzureWebJobsStorage
+    secret_WebsiteContentAzureFileConnectionStringName: secret_WebsiteContentAzureFileConnectionString
+    appInsightsInstrumentationKey: appinsightsmod.outputs.out_appInsightsInstrumentationKey
+    appInsightsConnectionString: appinsightsmod.outputs.out_appInsightsConnectionString
+    }
+    dependsOn:  [
+     keyvaultmod
+     webappmod
+     functionappmod
+   ]
+ }
+
 // Output Params used for IaC deployment in pipeline
 output out_webSiteName string = webSiteName
-// output out_sqlserverName string = sqlserverName
-// output out_sqlDBName string = sqlDBName
-// output out_sqlserverFQName string = sqldbmod.outputs.sqlserverfullyQualifiedDomainName
-// output out_configStoreName string = configStoreName
-// output out_appInsightsName string = appInsightsName
+output out_azuremapname string = azuremapname
 output out_functionAppName string = functionAppName
-// output out_apiServiceName string = apiServiceName
-// output out_loadTestsName string = loadTestsName
-// output out_keyvaultName string = keyvaultName
-// output out_secretConnectionString string = webappmod.outputs.out_secretConnectionString
-// output out_appInsightsApplicationId string = appinsightsmod.outputs.out_appInsightsApplicationId
-// output out_appInsightsAPIApplicationId string = appinsightsmod.outputs.out_appInsightsAPIApplicationId
-// output out_releaseAnnotationGuidID string = releaseAnnotationGuid
