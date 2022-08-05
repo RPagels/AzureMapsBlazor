@@ -38,22 +38,20 @@ jobs:
     - name: Test
       run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
     - name: Publish
-      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output './web'
 
     - name: Upload Build Artifacts
       if: ${{ github.event_name != 'pull_request' }}
       uses: actions/upload-artifact@v3
       with:
-        name: BlazorMap
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-        #path: ${{ github.workspace }}/BlazorMap
+        name: Web
+        path: ${{ github.workspace }}/web
 
     - name: Upload Infrastucture Files
       if: ${{ github.event_name != 'pull_request' }}
       uses: actions/upload-artifact@v3
       with:
         name: IaC
-        #path: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/IaC/*.*"
         path: ${{ github.workspace }}/IaC/*.*
 
   deploy_infrastructure:
@@ -146,21 +144,20 @@ jobs:
         inlineScript: |
           az group lock delete --name DontDeleteMe --resource-group ${{ env.Azure_Resource_GroupName }}
 
-    - name: Download Build Artifacts-Function Application
+    - name: Download Build Artifacts-Web Application
       uses: actions/download-artifact@v3
       continue-on-error: false
       with:
-        name: BlazorMap
-        path: ${{ github.workspace }}/BlazorMap
+        name: web
+        path: ${{ github.workspace }}/web
 
     # Deploy Web Application
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp 
       uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{ needs.deploy_infrastructure.outputs.output_webSiteName }} #${{ env.AZURE_WEBAPP_NAME }}
-        #publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        app-name: ${{ needs.deploy_infrastructure.outputs.output_webSiteName }}
+        package: './web'
 
     - name: Ensure Resource Group is Locked
       #if: contains(github.event_name, 'push')
