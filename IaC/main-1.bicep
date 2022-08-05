@@ -18,7 +18,12 @@ var functionAppServicePlanName = 'funcplan-${uniqueString(resourceGroup().id)}'
 var keyvaultName = 'kv-${uniqueString(resourceGroup().id)}'
 
 // KeyVault Secret Names
-param secret_configStoreConnectionName string = 'ConnectionStringsAppConfig'
+//param secret_AzureWebJobsStorageName string = 'AzureWebJobsStorage'
+param secret_AppKeyName string = 'AppKey'
+
+// NEVER!!! store secrets or keys in code.
+param secret_AppKeyValue string = 'IIM8Q~rcoip88gyTIyaKVGERsZ_1JUSnSRi2OaD2'
+
 
 // Tags
 var defaultTags = {
@@ -47,8 +52,6 @@ module functionappmod 'main-1-funcapp.bicep' = {
     functionAppServicePlanName: functionAppServicePlanName
     functionAppName: functionAppName
     defaultTags: defaultTags
-    appInsightsInstrumentationKey: appinsightsmod.outputs.out_appInsightsInstrumentationKey
-    appInsightsConnectionString: appinsightsmod.outputs.out_appInsightsConnectionString
   }
   dependsOn:  [
     appinsightsmod
@@ -94,16 +97,15 @@ module configsettingsmod './main-1-configsettings.bicep' = {
   name: 'configSettings'
   params: {
     keyvaultName: keyvaultName
-    secret_AppKeyName: 'AppKey'
-    secret_AppKeyNameValue: 'IIM8Q~rcoip88gyTIyaKVGERsZ_1JUSnSRi2OaD2'
+    secret_AppKeyName: secret_AppKeyName
+    secret_AppKeyValue: azuremapsmod.outputs.out_AzureMapsAppKey
     tenant: subscription().tenantId
     appServiceprincipalId: webappmod.outputs.out_appServiceprincipalId
     webappName: webSiteName
-    functionAppName: functionAppName
+    //functionAppName: functionAppName
     funcAppServiceprincipalId: functionappmod.outputs.out_funcAppServiceprincipalId
-    secret_AzureWebJobsStorageName: secret_AzureWebJobsStorageName
-    secret_AzureWebJobsStorageValue: functionappmod.outputs.out_AzureWebJobsStorage
-    secret_WebsiteContentAzureFileConnectionStringName: secret_WebsiteContentAzureFileConnectionString
+    //secret_AzureWebJobsStorageName: secret_AzureWebJobsStorageName
+    //secret_AzureWebJobsStorageValue: functionappmod.outputs.out_AzureWebJobsStorage
     appInsightsInstrumentationKey: appinsightsmod.outputs.out_appInsightsInstrumentationKey
     appInsightsConnectionString: appinsightsmod.outputs.out_appInsightsConnectionString
     }

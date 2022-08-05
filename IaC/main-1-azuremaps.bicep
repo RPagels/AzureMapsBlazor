@@ -23,3 +23,5 @@ resource accounts_azuremaps_name_resource 'Microsoft.Maps/accounts@2021-12-01-pr
     }
   }
 }
+
+output out_AzureMapsAppKey string = accounts_azuremaps_name_resource.id

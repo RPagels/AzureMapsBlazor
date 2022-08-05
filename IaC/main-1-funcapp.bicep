@@ -5,8 +5,6 @@
 param location string = resourceGroup().location
 param functionAppName string
 param functionAppServicePlanName string
-param appInsightsInstrumentationKey string
-param appInsightsConnectionString string
 param defaultTags object
 
 // param location string = resourceGroup().location

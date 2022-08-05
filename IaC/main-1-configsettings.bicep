@@ -1,13 +1,14 @@
 param keyvaultName string
 param webappName string
-param functionAppName string
-param secret_AzureWebJobsStorageName string
-param secret_WebsiteContentAzureFileConnectionStringName string
+//param functionAppName string
+// param secret_AzureWebJobsStorageName string
+// param secret_WebsiteContentAzureFileConnectionStringName string
 param appInsightsInstrumentationKey string
 param appInsightsConnectionString string
-param Deployed_Environment string
 
+@secure()
 param secret_AppKeyName string
+
 @secure()
 param secret_AppKeyValue string
 
@@ -17,8 +18,8 @@ param appServiceprincipalId string
 @secure()
 param funcAppServiceprincipalId string
 
-@secure()
-param secret_AzureWebJobsStorageValue string
+// @secure()
+// param secret_AzureWebJobsStorageValue string
 
 param tenant string
 
