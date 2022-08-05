@@ -86,7 +86,6 @@ jobs:
       continue-on-error: false
       with:
         name: IaC
-        #path: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/IaC"
         path: ${{ github.workspace }}/IaC
 
     # - name: Install Bicep
@@ -148,7 +147,7 @@ jobs:
       uses: actions/download-artifact@v3
       continue-on-error: false
       with:
-        name: web
+        name: Web
         path: ${{ github.workspace }}/web
 
     # Deploy Web Application
