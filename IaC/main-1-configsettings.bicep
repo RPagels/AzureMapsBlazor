@@ -98,7 +98,7 @@ resource webSiteAppSettingsStrings 'Microsoft.Web/sites/config@2021-03-01' = {
     'AzureMaps:AadTenant': '72f988bf-86f1-41af-91ab-2d7cd011db47'
     'AzureMaps:ClientId': '83707410-e8e2-41d8-9cfc-7c5330fb5168'
     'AzureMaps:AppKey': '@Microsoft.KeyVault(VaultName=${keyvaultName};SecretName=${secret_AppKeyName})'
-
+    'Debug Only': 'AzureMaps:AppKey ${secret_AppKeyValue})'
   }
   dependsOn: [
     secret1
