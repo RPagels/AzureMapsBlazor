@@ -6,7 +6,6 @@ param webappName string
 param appInsightsInstrumentationKey string
 param appInsightsConnectionString string
 
-@secure()
 param secret_AppKeyName string
 
 @secure()

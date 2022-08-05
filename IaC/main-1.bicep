@@ -21,10 +21,6 @@ var keyvaultName = 'kv-${uniqueString(resourceGroup().id)}'
 //param secret_AzureWebJobsStorageName string = 'AzureWebJobsStorage'
 param secret_AppKeyName string = 'AppKey'
 
-// NEVER!!! store secrets or keys in code.
-param secret_AppKeyValue string = 'IIM8Q~rcoip88gyTIyaKVGERsZ_1JUSnSRi2OaD2'
-
-
 // Tags
 var defaultTags = {
   App: 'Azure Maps Blazor'
