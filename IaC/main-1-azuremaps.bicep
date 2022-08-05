@@ -24,7 +24,7 @@ resource azuremaps 'Microsoft.Maps/accounts@2021-12-01-preview' = {
   }
 }
 
-var ClientId = listKeys(azuremaps.id, azuremaps.apiVersion).value[0].clientid
+var ClientId = listKeys(azuremaps.id, azuremaps.apiVersion).value[0].primaryKey
 var ClientId2 = listKeys(azuremaps.id, azuremaps.apiVersion).keys[0].value
 
 
