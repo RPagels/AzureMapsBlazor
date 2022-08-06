@@ -22,7 +22,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest #ubuntu-latest
     steps:
     - uses: actions/checkout@v3
 
@@ -34,11 +34,14 @@ jobs:
     - name: Restore
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Build
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+#      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+      run: dotnet build AzureMaps.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
+
     - name: Test
       run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
     - name: Publish
-      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output './web'
+#      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output './web'
+      run: dotnet publish AzureMaps.csproj --configuration ${{ env.CONFIGURATION }} -o './web'
 
     - name: Upload Build Artifacts
       if: ${{ github.event_name != 'pull_request' }}
