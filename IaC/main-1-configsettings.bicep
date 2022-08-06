@@ -5,13 +5,16 @@ param webappName string
 // param secret_WebsiteContentAzureFileConnectionStringName string
 param appInsightsInstrumentationKey string
 param appInsightsConnectionString string
-param AzureMapsClientId string
-param AzureMapsClientId2 string
 
 param secret_AppKeyName string
 
 @secure()
 param secret_AppKeyValue string
+
+param secret_ClientIdName string
+
+@secure()
+param secret_ClientIdValue string
 
 @secure()
 param appServiceprincipalId string
@@ -79,6 +82,15 @@ resource secret1 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   }
 }
 
+// Create KeyVault Secrets
+resource secret2 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+  name: secret_ClientIdName
+  parent: existing_keyvault
+  properties: {
+    value: secret_ClientIdValue
+  }
+}
+
 // Reference Existing resource
 resource existing_appService 'Microsoft.Web/sites@2021-03-01' existing = {
   name: webappName
@@ -98,14 +110,14 @@ resource webSiteAppSettingsStrings 'Microsoft.Web/sites/config@2021-03-01' = {
     ASPNETCORE_ENVIRONMENT: 'Development'
     'AzureMaps:AadAppId': 'c0d1eb87-0cec-40aa-a7d5-87b5f9c09ee7'
     'AzureMaps:AadTenant': '72f988bf-86f1-41af-91ab-2d7cd011db47'
-    'AzureMaps:ClientId': AzureMapsClientId
-    'AzureMaps:ClientId2': AzureMapsClientId2
-    //'AzureMaps:AppKey': 'H~T8Q~MABqEuVvEtpLFnt65LTylFxr_2aJaGXbup'
+    'AzureMaps:ClientId': '@Microsoft.KeyVault(VaultName=${keyvaultName};SecretName=${secret_ClientIdName})'
     'AzureMaps:AppKey': '@Microsoft.KeyVault(VaultName=${keyvaultName};SecretName=${secret_AppKeyName})'
-    'Debug Only': 'AzureMaps:AppKey ${secret_AppKeyValue})'
+    'Debug Only1': 'AzureMaps:AppKey = ${secret_AppKeyValue})'
+    'Debug Only2': 'AzureMaps:ClientId = ${secret_ClientIdValue})'
   }
   dependsOn: [
     secret1
+    secret2
   ]
 }
 
