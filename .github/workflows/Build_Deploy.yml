@@ -86,7 +86,7 @@ jobs:
         inlineScript: |
           az group lock delete --name DontDeleteMe --resource-group ${{ env.Azure_Resource_GroupName }}
     - name: Download Build Artifact-Infrastructure
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4.1.7
       continue-on-error: false
       with:
         name: IaC
@@ -129,7 +129,7 @@ jobs:
 
     steps:
     # - name: Download artifact from build job
-    #   uses: actions/download-artifact@v3
+    #   uses: actions/download-artifact@v4.1.7
     #   with:
     #     name: node-app
 
@@ -148,7 +148,7 @@ jobs:
           az group lock delete --name DontDeleteMe --resource-group ${{ env.Azure_Resource_GroupName }}
 
     - name: Download Build Artifacts-Web Application
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       continue-on-error: false
       with:
         name: Web
